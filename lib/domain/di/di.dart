@@ -1,5 +1,8 @@
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'dart:io';
 import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 import 'package:weatherapp/domain/providers/weather_provider.dart';
 
 
@@ -13,14 +16,21 @@ import '../../domain/repository/repository_impl.dart';
 GetIt di = GetIt.instance..allowReassignment = true;
 
 Future init() async {
-  final cm = DefaultCacheManager();
-    di.registerSingleton<DefaultCacheManager>(
-      cm,
+  // File path to a file in the current directory
+  Directory root = await getTemporaryDirectory();
+  // use the database factory to open the database
+  String dbPath = 'weather.db';
+  DatabaseFactory dbFactory = databaseFactoryIo;
+
+// We use the database factory to open the database
+  Database db = await dbFactory.openDatabase(root.path + dbPath);
+    di.registerSingleton<Database>(
+      db,
   );
 
   di.registerSingleton<CacheHelper>(
     CacheImplementation(
-      di<DefaultCacheManager>(),
+      di<Database>(),
     ),
   );
 

@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
+import '../../utils/constants.dart';
 
 abstract class Repository {
-  Future<Response?> getWeather(
+  Future<ResponseData> getWeather(
       {required String lon,
         required String lat,
         required String appId});

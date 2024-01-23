@@ -1,51 +1,47 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:sembast/sembast.dart';
 
 abstract class CacheHelper {
-  Future<File> put(String key, dynamic value);
+  Future<Object?> put(String key, dynamic value);
 
-  Future<FileInfo?> get(String key);
+  Future<Object?> get(String key);
 
-  Future remove(String key);
+  Future<Object?> remove(String key);
 
-  Future emptyCache(String key);
+  Future<Object?> emptyCache(String key);
 }
 
 class CacheImplementation extends CacheHelper {
-  final DefaultCacheManager _cacheManager;
+  final Database db;
 
-  CacheImplementation(this._cacheManager);
-
+  CacheImplementation(this.db);
+  var store = StoreRef.main();
   @override
-  Future emptyCache(String key) async {
-    await _basicErrorHandling(() async {
-      await _cacheManager.emptyCache();
+  Future<Object?> emptyCache(String key) async {
+    return await _basicErrorHandling(() async {
+      return await store.delete(db);
     });
   }
 
   @override
-  Future remove(String key) async {
-    _basicErrorHandling(() async {
-      return await _cacheManager.removeFile(key);
+  Future<Object?> remove(String key) async {
+    return await _basicErrorHandling(() async {
+      return await store.record(key).delete(db);
     });
   }
 
   @override
-  Future<FileInfo?> get(String key) async {
-    final FileInfo? f = await _basicErrorHandling(() async {
-      return await _cacheManager.getFileFromCache(key);
+  Future<Object?> get(String key) async {
+    return await _basicErrorHandling(() async {
+      return await store.record(key).get(db);
     });
-    return f;
   }
 
   @override
-  Future<File> put(String key, dynamic value) async {
-    final File f = await _basicErrorHandling(() async {
-      return await _cacheManager.putFile(key, value);
+  Future<Object?> put(String key, dynamic value) async {
+    return await _basicErrorHandling(() async {
+      return await store.record(key).put(db, value);
     });
-    return f;
   }
 }
 
