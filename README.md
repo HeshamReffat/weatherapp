@@ -1,16 +1,26 @@
 # weatherapp
 
-A new Flutter project.
+A Flutter Task.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project structure is MVVM
 
-A few resources to get you started if this is your first Flutter project:
+project layers are data,domain,presentation,utils
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+data contains the data layers which is remote and local
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+domain contains the viewModel(Providers Classes) , data models which carry the api response
+di, and repository where it switch the data layers and get the data
+
+presentation contains the ui components and screens
+
+utils contains constants and helper methods
+
+## appFeatures
+
+Cashing the data for offline access
+request the data from network using Dio
+error Handling for network layer and local layer
+unit test for api calls
+state management using provider
