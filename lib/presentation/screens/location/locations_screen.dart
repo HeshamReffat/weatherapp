@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weatherapp/domain/providers/weather_provider.dart';
+import 'package:weatherapp/theme/theme.dart';
 
 import '../../../domain/models/cities/cities_model.dart';
 
@@ -19,9 +20,9 @@ class _LocationsScreenState extends State<LocationsScreen> {
     return Consumer<WeatherProvider>(
       builder: (context, provider, _) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          //backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+           // backgroundColor: Colors.white,
             scrolledUnderElevation: 0.0,
             title: const Text("Search Locations"),
             leading: GestureDetector(
@@ -30,7 +31,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                 // color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -43,16 +44,16 @@ class _LocationsScreenState extends State<LocationsScreen> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
+            child: provider.citiesLoading?const Center(child: CircularProgressIndicator()):Column(
               children: [
                 Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
                         border: Border.all(color: Colors.grey.shade400),
-                        color: Colors.white,
+                        color: provider.themeDataStyle == ThemeDataStyle.dark?Colors.grey:Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.shade300,
+                            color: provider.themeDataStyle == ThemeDataStyle.dark?Colors.white:Colors.grey.shade300,
                             blurRadius: 5.0,
                             spreadRadius: 1.0,
                             offset: const Offset(0, 0),
@@ -76,6 +77,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
                         },
                       ),
                     )),
+                const SizedBox(height: 10.0,),
                 provider.loadingWeather
                     ? const Expanded(
                         child: Center(
@@ -107,7 +109,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
                                         cities[index].name!,
                                         style: const TextStyle(
                                           fontSize: 18,
-                                          color: Colors.black,
+                                         // color: Colors.black,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),

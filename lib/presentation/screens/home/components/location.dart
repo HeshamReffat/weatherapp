@@ -25,7 +25,7 @@ class Location extends StatelessWidget {
                     provider.getAddress(),
                     style: const TextStyle(
                         height: 0,
-                        color: Colors.black,
+                       // color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 22),
                   ),

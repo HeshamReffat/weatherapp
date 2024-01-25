@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -12,6 +13,7 @@ import 'package:weatherapp/domain/repository/repository.dart';
 import 'package:weatherapp/presentation/screens/home/home_screen.dart';
 
 import '../../data/data_source/remote/errors.dart';
+import '../../theme/theme.dart';
 import '../../utils/constants.dart';
 import '../../utils/images.dart';
 import '../../utils/utils.dart';
@@ -33,17 +35,46 @@ class WeatherProvider extends ChangeNotifier {
   String? location;
   CitiesModel? citiesModel;
   bool loadingWeather = false;
+  bool citiesLoading = false;
+  ThemeData _themeDataStyle = ThemeDataStyle.light;
 
-  void getCities() async {
-    var cities = await cacheHelper.get("Cities") as String?;
-    if (cities == null) {
-      cities = await Constants.getCitiesFile();
+  ThemeData get themeDataStyle => _themeDataStyle;
 
-      citiesModel = CitiesModel.fromJson(jsonDecode(cities));
-      cacheHelper.put("Cities", cities);
+  set themeDataStyle(ThemeData themeData) {
+    _themeDataStyle = themeData;
+
+    notifyListeners();
+  }
+
+  void changeTheme() {
+    if (_themeDataStyle == ThemeDataStyle.light) {
+      themeDataStyle = ThemeDataStyle.dark;
     } else {
-      citiesModel = CitiesModel.fromJson(jsonDecode(cities));
+      themeDataStyle = ThemeDataStyle.light;
     }
+  }
+
+  Future getCities() async {
+    citiesLoading = true;
+    //var cities = await cacheHelper.get("Cities") as String?;
+    //if (cities != null) {
+    var cities = await Constants.getCitiesFile();
+    citiesModel = await Isolate.run<CitiesModel>(() {
+      final data = CitiesModel.fromJson(jsonDecode(cities));
+      // citiesLoading = false;
+      //notifyListeners();
+      return data;
+    });
+    //cacheHelper.put("Cities", cities);
+    // } else {
+    //   citiesModel = await Isolate.run<CitiesModel>(() {
+    //     final data = CitiesModel.fromJson(jsonDecode(cities!));
+    //     //citiesLoading = false;
+    //    // notifyListeners();
+    //     return data;
+    //   });
+    // }
+    citiesLoading = false;
     notifyListeners();
   }
 
@@ -236,7 +267,7 @@ class WeatherProvider extends ChangeNotifier {
       myLocationPosition!.latitude,
       myLocationPosition!.longitude,
     );
-   // print(address[0]);
+    // print(address[0]);
     location = "${address[0].administrativeArea},${address[0].isoCountryCode}";
     cacheHelper.put("location", location);
     if (kDebugMode) {
@@ -246,6 +277,4 @@ class WeatherProvider extends ChangeNotifier {
     notifyListeners();
     return myLocationPosition!;
   }
-
-  Future translateEventsLocations() async {}
 }

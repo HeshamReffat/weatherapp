@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weatherapp/presentation/screens/splash/splash_screen.dart';
+import 'package:weatherapp/theme/theme.dart';
 
 import 'domain/di/di.dart';
 import 'domain/providers/weather_provider.dart';
@@ -17,15 +18,12 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<WeatherProvider>(create: (_) => di<WeatherProvider>()..getCities()),
+        ChangeNotifierProvider<WeatherProvider>(create: (_) => di<WeatherProvider>()),
       ],
       builder: (context,_){
         return MaterialApp(
           title: widget.title,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
+          theme: Provider.of<WeatherProvider>(context).themeDataStyle,// Dark mode styles
           home: const SplashScreen(),
         );
       },

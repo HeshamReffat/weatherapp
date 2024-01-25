@@ -17,10 +17,17 @@ presentation contains the ui components and screens
 
 utils contains constants and helper methods
 
-## appFeatures
+Theme contains the dark and light themes
 
+## appFeatures
+Flavors: [dev,staging,production]
+AppIcon changes depend on flavor
+Theme switch
 Cashing the data for offline access
 request the data from network using Dio
 error Handling for network layer and local layer
-unit test for api calls
+unit test for api call
 state management using provider
+GeoLocating for getting the user location and get weather for his city
+all cities are stored in local json file
+multithreading for heavy tasks
