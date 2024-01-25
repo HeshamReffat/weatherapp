@@ -1,245 +1,553 @@
-import 'dart:convert';
-
 class WeatherDataModel {
-  Coord? coord;
-  List<Weather>? weather;
-  String? base;
-  Main? main;
-  int? visibility;
-  Wind? wind;
-  Clouds? clouds;
-  int? dt;
-  Sys? sys;
-  int? timezone;
-  int? id;
-  String? name;
-  int? cod;
+  dynamic queryCost;
+  dynamic latitude;
+  dynamic longitude;
+  dynamic resolvedAddress;
+  dynamic address;
+  dynamic timezone;
+  dynamic tzoffset;
+  dynamic description;
+  List<Days>? days;
+  List<dynamic>? alerts;
+  Stations? stations;
+  CurrentConditions? currentConditions;
 
-  WeatherDataModel({
-    this.coord,
-    this.weather,
-    this.base,
-    this.main,
-    this.visibility,
-    this.wind,
-    this.clouds,
-    this.dt,
-    this.sys,
-    this.timezone,
-    this.id,
-    this.name,
-    this.cod,
-  });
+  WeatherDataModel(
+      {this.queryCost,
+        this.latitude,
+        this.longitude,
+        this.resolvedAddress,
+        this.address,
+        this.timezone,
+        this.tzoffset,
+        this.description,
+        this.days,
+        this.alerts,
+        this.stations,
+        this.currentConditions});
 
-  factory WeatherDataModel.fromRawJson(String str) => WeatherDataModel.fromJson(json.decode(str));
+  WeatherDataModel.fromJson(Map<String, dynamic> json) {
+    queryCost = json['queryCost'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    resolvedAddress = json['resolvedAddress'];
+    address = json['address'];
+    timezone = json['timezone'];
+    tzoffset = json['tzoffset'];
+    description = json['description'];
+    if (json['days'] != null) {
+      days = <Days>[];
+      json['days'].forEach((v) {
+        days!.add(Days.fromJson(v));
+      });
+    }
 
-  String toRawJson() => json.encode(toJson());
+    stations = json['stations'] != null
+        ? Stations.fromJson(json['stations'])
+        : null;
+    currentConditions = json['currentConditions'] != null
+        ? CurrentConditions.fromJson(json['currentConditions'])
+        : null;
+  }
 
-  factory WeatherDataModel.fromJson(Map<String, dynamic> json) => WeatherDataModel(
-    coord: json["coord"] == null ? null : Coord.fromJson(json["coord"]),
-    weather: json["weather"] == null ? [] : List<Weather>.from(json["weather"]!.map((x) => Weather.fromJson(x))),
-    base: json["base"],
-    main: json["main"] == null ? null : Main.fromJson(json["main"]),
-    visibility: json["visibility"],
-    wind: json["wind"] == null ? null : Wind.fromJson(json["wind"]),
-    clouds: json["clouds"] == null ? null : Clouds.fromJson(json["clouds"]),
-    dt: json["dt"],
-    sys: json["sys"] == null ? null : Sys.fromJson(json["sys"]),
-    timezone: json["timezone"],
-    id: json["id"],
-    name: json["name"],
-    cod: json["cod"],
-  );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['queryCost'] = queryCost;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['resolvedAddress'] = resolvedAddress;
+    data['address'] = address;
+    data['timezone'] = timezone;
+    data['tzoffset'] = tzoffset;
+    data['description'] = description;
+    if (days != null) {
+      data['days'] = days!.map((v) => v.toJson()).toList();
+    }
 
-  Map<String, dynamic> toJson() => {
-    "coord": coord?.toJson(),
-    "weather": weather == null ? [] : List<dynamic>.from(weather!.map((x) => x.toJson())),
-    "base": base,
-    "main": main?.toJson(),
-    "visibility": visibility,
-    "wind": wind?.toJson(),
-    "clouds": clouds?.toJson(),
-    "dt": dt,
-    "sys": sys?.toJson(),
-    "timezone": timezone,
-    "id": id,
-    "name": name,
-    "cod": cod,
-  };
+    if (stations != null) {
+      data['stations'] = stations!.toJson();
+    }
+    if (currentConditions != null) {
+      data['currentConditions'] = currentConditions!.toJson();
+    }
+    return data;
+  }
 }
 
-class Clouds {
-  int? all;
+class Days {
+  dynamic datetime;
+  dynamic datetimeEpoch;
+  dynamic tempmax;
+  dynamic tempmin;
+  dynamic temp;
+  dynamic feelslikemax;
+  dynamic feelslikemin;
+  dynamic feelslike;
+  dynamic dew;
+  dynamic humidity;
+  dynamic precip;
+  dynamic precipprob;
+  dynamic precipcover;
+  List<dynamic>? preciptype;
+  dynamic snow;
+  dynamic snowdepth;
+  dynamic windgust;
+  dynamic windspeed;
+  dynamic winddir;
+  dynamic pressure;
+  dynamic cloudcover;
+  dynamic visibility;
+  dynamic solarradiation;
+  dynamic solarenergy;
+  dynamic uvindex;
+  dynamic severerisk;
+  dynamic sunrise;
+  dynamic sunriseEpoch;
+  dynamic sunset;
+  dynamic sunsetEpoch;
+  dynamic moonphase;
+  dynamic conditions;
+  dynamic description;
+  dynamic icon;
+  List<dynamic>? stations;
+  dynamic source;
+  List<Hours>? hours;
 
-  Clouds({
-    this.all,
-  });
+  Days(
+      {this.datetime,
+        this.datetimeEpoch,
+        this.tempmax,
+        this.tempmin,
+        this.temp,
+        this.feelslikemax,
+        this.feelslikemin,
+        this.feelslike,
+        this.dew,
+        this.humidity,
+        this.precip,
+        this.precipprob,
+        this.precipcover,
+        this.preciptype,
+        this.snow,
+        this.snowdepth,
+        this.windgust,
+        this.windspeed,
+        this.winddir,
+        this.pressure,
+        this.cloudcover,
+        this.visibility,
+        this.solarradiation,
+        this.solarenergy,
+        this.uvindex,
+        this.severerisk,
+        this.sunrise,
+        this.sunriseEpoch,
+        this.sunset,
+        this.sunsetEpoch,
+        this.moonphase,
+        this.conditions,
+        this.description,
+        this.icon,
+        this.stations,
+        this.source,
+        this.hours});
 
-  factory Clouds.fromRawJson(String str) => Clouds.fromJson(json.decode(str));
+  Days.fromJson(Map<String, dynamic> json) {
+    datetime = json['datetime'];
+    datetimeEpoch = json['datetimeEpoch'];
+    tempmax = json['tempmax'];
+    tempmin = json['tempmin'];
+    temp = json['temp'];
+    feelslikemax = json['feelslikemax'];
+    feelslikemin = json['feelslikemin'];
+    feelslike = json['feelslike'];
+    dew = json['dew'];
+    humidity = json['humidity'];
+    precip = json['precip'];
+    precipprob = json['precipprob'];
+    precipcover = json['precipcover'];
+    preciptype = json['preciptype'];
+    snow = json['snow'];
+    snowdepth = json['snowdepth'];
+    windgust = json['windgust'];
+    windspeed = json['windspeed'];
+    winddir = json['winddir'];
+    pressure = json['pressure'];
+    cloudcover = json['cloudcover'];
+    visibility = json['visibility'];
+    solarradiation = json['solarradiation'];
+    solarenergy = json['solarenergy'];
+    uvindex = json['uvindex'];
+    severerisk = json['severerisk'];
+    sunrise = json['sunrise'];
+    sunriseEpoch = json['sunriseEpoch'];
+    sunset = json['sunset'];
+    sunsetEpoch = json['sunsetEpoch'];
+    moonphase = json['moonphase'];
+    conditions = json['conditions'];
+    description = json['description'];
+    icon = json['icon'];
+    stations = json['stations'];
+    source = json['source'];
+    if (json['hours'] != null) {
+      hours = <Hours>[];
+      json['hours'].forEach((v) {
+        hours!.add(Hours.fromJson(v));
+      });
+    }
+  }
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Clouds.fromJson(Map<String, dynamic> json) => Clouds(
-    all: json["all"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "all": all,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['datetime'] = datetime;
+    data['datetimeEpoch'] = datetimeEpoch;
+    data['tempmax'] = tempmax;
+    data['tempmin'] = tempmin;
+    data['temp'] = temp;
+    data['feelslikemax'] = feelslikemax;
+    data['feelslikemin'] = feelslikemin;
+    data['feelslike'] = feelslike;
+    data['dew'] = dew;
+    data['humidity'] = humidity;
+    data['precip'] = precip;
+    data['precipprob'] = precipprob;
+    data['precipcover'] = precipcover;
+    data['preciptype'] = preciptype;
+    data['snow'] = snow;
+    data['snowdepth'] = snowdepth;
+    data['windgust'] = windgust;
+    data['windspeed'] = windspeed;
+    data['winddir'] = winddir;
+    data['pressure'] = pressure;
+    data['cloudcover'] = cloudcover;
+    data['visibility'] = visibility;
+    data['solarradiation'] = solarradiation;
+    data['solarenergy'] = solarenergy;
+    data['uvindex'] = uvindex;
+    data['severerisk'] = severerisk;
+    data['sunrise'] = sunrise;
+    data['sunriseEpoch'] = sunriseEpoch;
+    data['sunset'] = sunset;
+    data['sunsetEpoch'] = sunsetEpoch;
+    data['moonphase'] = moonphase;
+    data['conditions'] = conditions;
+    data['description'] = description;
+    data['icon'] = icon;
+    data['stations'] = stations;
+    data['source'] = source;
+    if (hours != null) {
+      data['hours'] = hours!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Coord {
-  double? lon;
-  double? lat;
+class Hours {
+  dynamic datetime;
+  dynamic datetimeEpoch;
+  dynamic temp;
+  dynamic feelslike;
+  dynamic humidity;
+  dynamic dew;
+  dynamic precip;
+  dynamic precipprob;
+  dynamic snow;
+  dynamic snowdepth;
+  List<dynamic>? preciptype;
+  dynamic windgust;
+  dynamic windspeed;
+  dynamic winddir;
+  dynamic pressure;
+  dynamic visibility;
+  dynamic cloudcover;
+  dynamic solarradiation;
+  dynamic solarenergy;
+  dynamic uvindex;
+  dynamic severerisk;
+  dynamic conditions;
+  dynamic icon;
+  List<dynamic>? stations;
+  dynamic source;
 
-  Coord({
-    this.lon,
-    this.lat,
-  });
+  Hours(
+      {this.datetime,
+        this.datetimeEpoch,
+        this.temp,
+        this.feelslike,
+        this.humidity,
+        this.dew,
+        this.precip,
+        this.precipprob,
+        this.snow,
+        this.snowdepth,
+        this.preciptype,
+        this.windgust,
+        this.windspeed,
+        this.winddir,
+        this.pressure,
+        this.visibility,
+        this.cloudcover,
+        this.solarradiation,
+        this.solarenergy,
+        this.uvindex,
+        this.severerisk,
+        this.conditions,
+        this.icon,
+        this.stations,
+        this.source});
 
-  factory Coord.fromRawJson(String str) => Coord.fromJson(json.decode(str));
+  Hours.fromJson(Map<String, dynamic> json) {
+    datetime = json['datetime'];
+    datetimeEpoch = json['datetimeEpoch'];
+    temp = json['temp'];
+    feelslike = json['feelslike'];
+    humidity = json['humidity'];
+    dew = json['dew'];
+    precip = json['precip'];
+    precipprob = json['precipprob'];
+    snow = json['snow'];
+    snowdepth = json['snowdepth'];
+    preciptype = json['preciptype'];
+    windgust = json['windgust'];
+    windspeed = json['windspeed'];
+    winddir = json['winddir'];
+    pressure = json['pressure'];
+    visibility = json['visibility'];
+    cloudcover = json['cloudcover'];
+    solarradiation = json['solarradiation'];
+    solarenergy = json['solarenergy'];
+    uvindex = json['uvindex'];
+    severerisk = json['severerisk'];
+    conditions = json['conditions'];
+    icon = json['icon'];
+    stations = json['stations'];
+    source = json['source'];
+  }
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Coord.fromJson(Map<String, dynamic> json) => Coord(
-    lon: json["lon"]?.toDouble(),
-    lat: json["lat"]?.toDouble(),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "lon": lon,
-    "lat": lat,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['datetime'] = datetime;
+    data['datetimeEpoch'] = datetimeEpoch;
+    data['temp'] = temp;
+    data['feelslike'] = feelslike;
+    data['humidity'] = humidity;
+    data['dew'] = dew;
+    data['precip'] = precip;
+    data['precipprob'] = precipprob;
+    data['snow'] = snow;
+    data['snowdepth'] = snowdepth;
+    data['preciptype'] = preciptype;
+    data['windgust'] = windgust;
+    data['windspeed'] = windspeed;
+    data['winddir'] = winddir;
+    data['pressure'] = pressure;
+    data['visibility'] = visibility;
+    data['cloudcover'] = cloudcover;
+    data['solarradiation'] = solarradiation;
+    data['solarenergy'] = solarenergy;
+    data['uvindex'] = uvindex;
+    data['severerisk'] = severerisk;
+    data['conditions'] = conditions;
+    data['icon'] = icon;
+    data['stations'] = stations;
+    data['source'] = source;
+    return data;
+  }
 }
 
-class Main {
-  double? temp;
-  double? feelsLike;
-  double? tempMin;
-  double? tempMax;
-  int? pressure;
-  int? humidity;
+class Stations {
+  VIAR? vIAR;
+  VIAR? oPLA;
 
-  Main({
-    this.temp,
-    this.feelsLike,
-    this.tempMin,
-    this.tempMax,
-    this.pressure,
-    this.humidity,
-  });
+  Stations({this.vIAR, this.oPLA});
 
-  factory Main.fromRawJson(String str) => Main.fromJson(json.decode(str));
+  Stations.fromJson(Map<String, dynamic> json) {
+    vIAR = json['VIAR'] != null ? VIAR.fromJson(json['VIAR']) : null;
+    oPLA = json['OPLA'] != null ? VIAR.fromJson(json['OPLA']) : null;
+  }
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Main.fromJson(Map<String, dynamic> json) => Main(
-    temp: json["temp"]?.toDouble(),
-    feelsLike: json["feels_like"]?.toDouble(),
-    tempMin: json["temp_min"]?.toDouble(),
-    tempMax: json["temp_max"]?.toDouble(),
-    pressure: json["pressure"],
-    humidity: json["humidity"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "temp": temp,
-    "feels_like": feelsLike,
-    "temp_min": tempMin,
-    "temp_max": tempMax,
-    "pressure": pressure,
-    "humidity": humidity,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (vIAR != null) {
+      data['VIAR'] = vIAR!.toJson();
+    }
+    if (oPLA != null) {
+      data['OPLA'] = oPLA!.toJson();
+    }
+    return data;
+  }
 }
 
-class Sys {
-  int? type;
-  int? id;
-  String? country;
-  int? sunrise;
-  int? sunset;
+class VIAR {
+  dynamic distance;
+  dynamic latitude;
+  dynamic longitude;
+  dynamic useCount;
+  dynamic id;
+  dynamic name;
+  dynamic quality;
+  dynamic contribution;
 
-  Sys({
-    this.type,
-    this.id,
-    this.country,
-    this.sunrise,
-    this.sunset,
-  });
+  VIAR(
+      {this.distance,
+        this.latitude,
+        this.longitude,
+        this.useCount,
+        this.id,
+        this.name,
+        this.quality,
+        this.contribution});
 
-  factory Sys.fromRawJson(String str) => Sys.fromJson(json.decode(str));
+  VIAR.fromJson(Map<String, dynamic> json) {
+    distance = json['distance'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    useCount = json['useCount'];
+    id = json['id'];
+    name = json['name'];
+    quality = json['quality'];
+    contribution = json['contribution'];
+  }
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Sys.fromJson(Map<String, dynamic> json) => Sys(
-    type: json["type"],
-    id: json["id"],
-    country: json["country"],
-    sunrise: json["sunrise"],
-    sunset: json["sunset"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "type": type,
-    "id": id,
-    "country": country,
-    "sunrise": sunrise,
-    "sunset": sunset,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['distance'] = distance;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['useCount'] = useCount;
+    data['id'] = id;
+    data['name'] = name;
+    data['quality'] = quality;
+    data['contribution'] = contribution;
+    return data;
+  }
 }
 
-class Weather {
-  int? id;
-  String? main;
-  String? description;
-  String? icon;
+class CurrentConditions {
+  dynamic datetime;
+  dynamic datetimeEpoch;
+  dynamic temp;
+  dynamic feelslike;
+  dynamic humidity;
+  dynamic dew;
+  dynamic precip;
+  dynamic precipprob;
+  dynamic snow;
+  dynamic snowdepth;
+  dynamic preciptype;
+  dynamic windgust;
+  dynamic windspeed;
+  dynamic winddir;
+  dynamic pressure;
+  dynamic visibility;
+  dynamic cloudcover;
+  dynamic solarradiation;
+  dynamic solarenergy;
+  dynamic uvindex;
+  dynamic conditions;
+  dynamic icon;
+  List<dynamic>? stations;
+  dynamic source;
+  dynamic sunrise;
+  dynamic sunriseEpoch;
+  dynamic sunset;
+  dynamic sunsetEpoch;
+  dynamic moonphase;
 
-  Weather({
-    this.id,
-    this.main,
-    this.description,
-    this.icon,
-  });
+  CurrentConditions(
+      {this.datetime,
+        this.datetimeEpoch,
+        this.temp,
+        this.feelslike,
+        this.humidity,
+        this.dew,
+        this.precip,
+        this.precipprob,
+        this.snow,
+        this.snowdepth,
+        this.preciptype,
+        this.windgust,
+        this.windspeed,
+        this.winddir,
+        this.pressure,
+        this.visibility,
+        this.cloudcover,
+        this.solarradiation,
+        this.solarenergy,
+        this.uvindex,
+        this.conditions,
+        this.icon,
+        this.stations,
+        this.source,
+        this.sunrise,
+        this.sunriseEpoch,
+        this.sunset,
+        this.sunsetEpoch,
+        this.moonphase});
 
-  factory Weather.fromRawJson(String str) => Weather.fromJson(json.decode(str));
+  CurrentConditions.fromJson(Map<String, dynamic> json) {
+    datetime = json['datetime'];
+    datetimeEpoch = json['datetimeEpoch'];
+    temp = json['temp'];
+    feelslike = json['feelslike'];
+    humidity = json['humidity'];
+    dew = json['dew'];
+    precip = json['precip'];
+    precipprob = json['precipprob'];
+    snow = json['snow'];
+    snowdepth = json['snowdepth'];
+    preciptype = json['preciptype'];
+    windgust = json['windgust'];
+    windspeed = json['windspeed'];
+    winddir = json['winddir'];
+    pressure = json['pressure'];
+    visibility = json['visibility'];
+    cloudcover = json['cloudcover'];
+    solarradiation = json['solarradiation'];
+    solarenergy = json['solarenergy'];
+    uvindex = json['uvindex'];
+    conditions = json['conditions'];
+    icon = json['icon'];
+    stations = json['stations'];
+    source = json['source'];
+    sunrise = json['sunrise'];
+    sunriseEpoch = json['sunriseEpoch'];
+    sunset = json['sunset'];
+    sunsetEpoch = json['sunsetEpoch'];
+    moonphase = json['moonphase'];
+  }
 
-  String toRawJson() => json.encode(toJson());
-
-  factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-    id: json["id"],
-    main: json["main"],
-    description: json["description"],
-    icon: json["icon"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "main": main,
-    "description": description,
-    "icon": icon,
-  };
-}
-
-class Wind {
-  double? speed;
-  int? deg;
-
-  Wind({
-    this.speed,
-    this.deg,
-  });
-
-  factory Wind.fromRawJson(String str) => Wind.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Wind.fromJson(Map<String, dynamic> json) => Wind(
-    speed: json["speed"]?.toDouble(),
-    deg: json["deg"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "speed": speed,
-    "deg": deg,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['datetime'] = datetime;
+    data['datetimeEpoch'] = datetimeEpoch;
+    data['temp'] = temp;
+    data['feelslike'] = feelslike;
+    data['humidity'] = humidity;
+    data['dew'] = dew;
+    data['precip'] = precip;
+    data['precipprob'] = precipprob;
+    data['snow'] = snow;
+    data['snowdepth'] = snowdepth;
+    data['preciptype'] = preciptype;
+    data['windgust'] = windgust;
+    data['windspeed'] = windspeed;
+    data['winddir'] = winddir;
+    data['pressure'] = pressure;
+    data['visibility'] = visibility;
+    data['cloudcover'] = cloudcover;
+    data['solarradiation'] = solarradiation;
+    data['solarenergy'] = solarenergy;
+    data['uvindex'] = uvindex;
+    data['conditions'] = conditions;
+    data['icon'] = icon;
+    data['stations'] = stations;
+    data['source'] = source;
+    data['sunrise'] = sunrise;
+    data['sunriseEpoch'] = sunriseEpoch;
+    data['sunset'] = sunset;
+    data['sunsetEpoch'] = sunsetEpoch;
+    data['moonphase'] = moonphase;
+    return data;
+  }
 }

@@ -2,7 +2,5 @@ import '../../utils/constants.dart';
 
 abstract class Repository {
   Future<ResponseData> getWeather(
-      {required String lon,
-        required String lat,
-        required String appId});
+      {required String appId,required String city});
 }

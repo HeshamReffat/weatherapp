@@ -5,10 +5,8 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:weatherapp/domain/providers/weather_provider.dart';
 
-
 import '../../data/data_source/local/cache_helper.dart';
 import '../../data/data_source/remote/dio_helper.dart';
-
 
 import '../../domain/repository/repository.dart';
 import '../../domain/repository/repository_impl.dart';
@@ -24,8 +22,8 @@ Future init() async {
 
 // We use the database factory to open the database
   Database db = await dbFactory.openDatabase(root.path + dbPath);
-    di.registerSingleton<Database>(
-      db,
+  di.registerSingleton<Database>(
+    db,
   );
 
   di.registerSingleton<CacheHelper>(
@@ -38,7 +36,6 @@ Future init() async {
     DioImplementation(),
   );
 
-
   di.registerSingleton<Repository>(
     RepoImplementation(
       dioHelper: di<DioHelper>(),
@@ -46,6 +43,6 @@ Future init() async {
     ),
   );
   di.registerSingleton<WeatherProvider>(
-    WeatherProvider(di<Repository>()),
+    WeatherProvider(di<Repository>(), di<CacheHelper>()),
   );
 }

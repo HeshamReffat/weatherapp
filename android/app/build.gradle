@@ -58,6 +58,24 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    flavorDimensions "default"
+    productFlavors{
+        production{
+            dimension "default"
+            resValue "string","app_name","weather"
+            applicationIdSuffix ""
+        }
+        staging{
+            dimension "default"
+            resValue "string","app_name","weather staging"
+            applicationIdSuffix ".stg"
+        }
+        development{
+            dimension "default"
+            resValue "string","app_name","weather development"
+            applicationIdSuffix ".dev"
+        }
+    }
 }
 
 flutter {

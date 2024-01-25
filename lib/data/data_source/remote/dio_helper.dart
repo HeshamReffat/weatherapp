@@ -28,7 +28,8 @@ abstract class DioHelper {
 class DioImplementation extends DioHelper {
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'https://api.openweathermap.org/data/2.5/',
+      connectTimeout: const Duration(seconds: 10),
+      baseUrl: 'https://weather.visualcrossing.com/',
       receiveDataWhenStatusError: true,
       validateStatus: (statusCode) {
         if (statusCode == null) {

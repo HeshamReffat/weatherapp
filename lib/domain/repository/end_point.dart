@@ -1,1 +1,1 @@
-const String weatherEndPoint = "weather";
+const String weatherEndPoint = "VisualCrossingWebServices/rest/services/timeline/";
