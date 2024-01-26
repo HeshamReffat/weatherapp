@@ -48,6 +48,10 @@ class RepoImplementation extends Repository {
       data = await cacheHelper?.get("weatherData") as Map<String, dynamic>?;
       Constants.showToast(message: "Please Try Again", type: ApiResult.error);
       return Failure(data, e);
+    }on FormatException catch (e) {
+      data = await cacheHelper?.get("weatherData") as Map<String, dynamic>?;
+      Constants.showToast(message: "Please Try Again", type: ApiResult.error);
+      return Failure(data, e);
     } on DioException catch (e) {
       data = await cacheHelper?.get("weatherData") as Map<String, dynamic>?;
       Constants.showToast(

@@ -44,7 +44,7 @@ class WeatherDataModel {
     description: json["description"],
     days: json["days"] == null ? [] : List<Days>.from(json["days"]!.map((x) => Days.fromJson(x))),
     alerts: json["alerts"] == null ? [] : List<dynamic>.from(json["alerts"]!.map((x) => x)),
-    stations: Map.from(json["stations"]!).map((k, v) => MapEntry<String, StationValue>(k, StationValue.fromJson(v))),
+    //stations: Map.from(json["stations"]).map((k, v) => MapEntry<String, StationValue>(k, StationValue.fromJson(v))),
     currentConditions: json["currentConditions"] == null ? null : Days.fromJson(json["currentConditions"]),
   );
 
@@ -168,7 +168,7 @@ class Days {
     solarradiation: json["solarradiation"]?.toDouble(),
     solarenergy: json["solarenergy"]?.toDouble(),
     uvindex: json["uvindex"],
-    conditions: conditionsValues.map[json["conditions"]]!,
+    conditions: conditionsValues.map[json["conditions"]],
     icon: iconValues.map[json["icon"]]!,
     //stations: json["stations"] == null ? [] : List<StationElement>.from(json["stations"].map((x) => stationElementValues.map[x])),
     source: sourceValues.map[json["source"]]!,
