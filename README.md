@@ -1,8 +1,8 @@
 # weatherapp
 
-A Flutter Task.
+Flutter app that show the weather condition for your location or you can select another location to get it's weather condition
 
-## Getting Started
+## About Project
 
 This project structure is MVVM
 
@@ -19,15 +19,27 @@ utils contains constants and helper methods
 
 Theme contains the dark and light themes
 
-## appFeatures
+## AppFeatures
 Flavors: [dev,staging,production]
+
 AppIcon changes depend on flavor
-Theme switch
+
+Theme switch between dark and light
+
 Cashing the data for offline access
+
 request the data from network using Dio
+
 error Handling for network layer and local layer
+
+Di for injection and singleton
+
 unit test for api call
+
 state management using provider
+
 GeoLocating for getting the user location and get weather for his city
-all cities are stored in local json file
+
+all cities are stored in local json file change location by pressing on location icon in home
+
 multithreading for heavy tasks

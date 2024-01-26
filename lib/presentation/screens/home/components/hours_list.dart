@@ -63,7 +63,7 @@ class HoursList extends StatelessWidget {
                                 width: 50,
                               ),
                               Text(
-                                '${provider.weatherDataModel!.days![0].hours![index].temp.toInt()}\u00B0',
+                                '${provider.weatherDataModel!.days![0].hours![index].temp!.toInt()}\u00B0',
                                 style: TextStyle(
                                     color: provider.compareIndex(index)
                                         ? Colors.white

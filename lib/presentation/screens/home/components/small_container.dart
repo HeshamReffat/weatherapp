@@ -32,8 +32,8 @@ class _SmallContainerState extends State<SmallContainer> {
         ),
         Text(
           widget.text,
-          style:  const TextStyle(fontWeight: FontWeight.bold,
-          //color: widget.textColor?? Colors.black
+          style:   TextStyle(fontWeight: FontWeight.bold,
+          color: widget.textColor
           ),
         )
       ],

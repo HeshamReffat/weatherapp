@@ -22,6 +22,8 @@ class _LocationsScreenState extends State<LocationsScreen> {
         return Scaffold(
           //backgroundColor: Colors.white,
           appBar: AppBar(
+            elevation: 0.0,
+           forceMaterialTransparency: true,
            // backgroundColor: Colors.white,
             scrolledUnderElevation: 0.0,
             title: const Text("Search Locations"),
@@ -53,7 +55,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
                         color: provider.themeDataStyle == ThemeDataStyle.dark?Colors.grey:Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: provider.themeDataStyle == ThemeDataStyle.dark?Colors.white:Colors.grey.shade300,
+                            color: provider.themeDataStyle == ThemeDataStyle.dark?Colors.white38:Colors.grey.shade300,
                             blurRadius: 5.0,
                             spreadRadius: 1.0,
                             offset: const Offset(0, 0),
@@ -62,8 +64,8 @@ class _LocationsScreenState extends State<LocationsScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                            border: InputBorder.none, hintText: "Search"),
+                        decoration:  InputDecoration(
+                            border: InputBorder.none, hintText: "Search",suffixIcon: Icon(Icons.search,color: provider.themeDataStyle == ThemeDataStyle.dark?Colors.white70:Colors.grey,)),
                         onChanged: (value) {
                           cities.clear();
                           for (var element in provider.citiesModel!.data!) {

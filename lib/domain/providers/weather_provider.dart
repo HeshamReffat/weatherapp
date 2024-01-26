@@ -90,7 +90,7 @@ class WeatherProvider extends ChangeNotifier {
           day = weatherDataModel!.days![0];
           for (int i = 0; i < weatherDataModel!.days![0].hours!.length; i++) {
             if (Utils.checkTime(
-                weatherDataModel!.days![0].hours![i].datetime)) {
+                weatherDataModel!.days![0].hours![i].datetime!)) {
               hours = weatherDataModel!.days![0].hours![i];
               currentIndex = i;
               break;
@@ -115,7 +115,7 @@ class WeatherProvider extends ChangeNotifier {
           day = weatherDataModel!.days![0];
           for (int i = 0; i < weatherDataModel!.days![0].hours!.length; i++) {
             if (Utils.checkTime(
-                weatherDataModel!.days![0].hours![i].datetime)) {
+                weatherDataModel!.days![0].hours![i].datetime!)) {
               hours = weatherDataModel!.days![0].hours![i];
               currentIndex = i;
               break;
@@ -156,7 +156,7 @@ class WeatherProvider extends ChangeNotifier {
   bool compareIndex(int index) => index == currentIndex;
 
   String getHour(int index) => Utils.formateTimeWithout(
-      weatherDataModel!.days![0].hours![index].datetime);
+      weatherDataModel!.days![0].hours![index].datetime!);
 
   String getImage(int index) => Utils.imageMap[
               weatherDataModel!.days![0].hours![index].conditions.toString()] ==
@@ -170,15 +170,15 @@ class WeatherProvider extends ChangeNotifier {
 
   String getCondition() => hours!.conditions.toString();
 
-  String getCurrentTemp() => hours!.temp.toInt().toString();
+  String getCurrentTemp() => hours!.temp!.toInt().toString();
 
-  String getFeelLike() => hours!.feelslike.toString();
+  String getFeelLike() => hours!.feelslike!.toString();
 
-  String getCloudOver() => hours!.cloudcover.toInt().toString();
+  String getCloudOver() => hours!.cloudcover!.toInt().toString();
 
-  String getWindSpeed() => hours!.windspeed.toInt().toString();
+  String getWindSpeed() => hours!.windspeed!.toInt().toString();
 
-  String getHumidity() => hours!.humidity.toInt().toString();
+  String getHumidity() => hours!.humidity!.toInt().toString();
 
   setDay(int index) {
     day = weatherDataModel!.days![index];
@@ -193,24 +193,24 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   String getMonth(int index) {
-    return Utils.extractDate(weatherDataModel!.days![index].datetime);
+    return Utils.extractDate(weatherDataModel!.days![index].datetime!);
   }
 
   String getMonthDay(int index) {
-    return Utils.extractDay(weatherDataModel!.days![index].datetime);
+    return Utils.extractDay(weatherDataModel!.days![index].datetime!);
   }
 
   String getDate(int index) {
     return Utils.formateDate(
-        DateTime.parse(weatherDataModel!.days![index].datetime));
+        DateTime.parse(weatherDataModel!.days![index].datetime!));
   }
 
   String getMinTemp(int index) {
-    return '${weatherDataModel!.days![index].tempmin.toInt()}\u00B0';
+    return '${weatherDataModel!.days![index].tempmin!.toInt()}\u00B0';
   }
 
   String getMaxTemp(int index) {
-    return '${weatherDataModel!.days![index].tempmax.toInt()}\u00B0';
+    return '${weatherDataModel!.days![index].tempmax!.toInt()}\u00B0';
   }
 
   void getSavedLocation(context) async {

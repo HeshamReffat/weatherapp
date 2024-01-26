@@ -59,7 +59,7 @@ class CenterCard extends StatelessWidget {
                                 ).createShader(bounds);
                               },
                               child: Text(
-                                '${provider.day!.temp.toInt().toString()}\u00B0',
+                                '${provider.day!.temp!.toInt().toString()}\u00B0',
                                 style: const TextStyle(
                                   fontSize: 80,
                                   height: 0,
@@ -89,7 +89,7 @@ class CenterCard extends StatelessWidget {
                           children: [
                             const Spacer(),
                             Text(
-                              provider.day!.conditions,
+                              provider.day!.conditions!.name,
                               style: const TextStyle(
                                   height: 0,
                                   color: Colors.white,
