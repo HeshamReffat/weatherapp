@@ -37,8 +37,24 @@ class WeatherProvider extends ChangeNotifier {
   bool loadingWeather = false;
   bool citiesLoading = false;
   ThemeData _themeDataStyle = ThemeDataStyle.light;
+  String _tempUnit = "metric";
+  String get tempUnit {
+    cacheHelper.get("unit").then((value) {
+      _tempUnit = value as String ? ??_tempUnit;
+    });
+    return _tempUnit;
+  }
 
-  ThemeData get themeDataStyle => _themeDataStyle;
+  ThemeData get themeDataStyle {
+    cacheHelper.get("theme").then((value) {
+      if (value == "dark") {
+        _themeDataStyle = ThemeDataStyle.dark;
+      } else {
+        _themeDataStyle = ThemeDataStyle.light;
+      }
+    });
+    return _themeDataStyle;
+  }
 
   set themeDataStyle(ThemeData themeData) {
     _themeDataStyle = themeData;
@@ -49,31 +65,33 @@ class WeatherProvider extends ChangeNotifier {
   void changeTheme() {
     if (_themeDataStyle == ThemeDataStyle.light) {
       themeDataStyle = ThemeDataStyle.dark;
+      cacheHelper.put("theme", "dark");
     } else {
       themeDataStyle = ThemeDataStyle.light;
+      cacheHelper.put("theme", "light");
     }
+  }
+
+  void changeUnit(context) {
+    if (_tempUnit == "us") {
+      _tempUnit = "metric";
+      cacheHelper.put("unit", _tempUnit);
+    } else {
+      _tempUnit = "us";
+      cacheHelper.put("unit", _tempUnit);
+    }
+    getWeatherData(context, true);
+    notifyListeners();
   }
 
   Future getCities() async {
     citiesLoading = true;
-    //var cities = await cacheHelper.get("Cities") as String?;
-    //if (cities != null) {
     var cities = await Constants.getCitiesFile();
     citiesModel = await Isolate.run<CitiesModel>(() {
       final data = CitiesModel.fromJson(jsonDecode(cities));
-      // citiesLoading = false;
-      //notifyListeners();
       return data;
     });
-    //cacheHelper.put("Cities", cities);
-    // } else {
-    //   citiesModel = await Isolate.run<CitiesModel>(() {
-    //     final data = CitiesModel.fromJson(jsonDecode(cities!));
-    //     //citiesLoading = false;
-    //    // notifyListeners();
-    //     return data;
-    //   });
-    // }
+
     citiesLoading = false;
     notifyListeners();
   }
@@ -81,8 +99,8 @@ class WeatherProvider extends ChangeNotifier {
   Future getWeatherData(BuildContext context, bool fromSearch) async {
     loadingWeather = true;
     notifyListeners();
-    final data =
-        await repository.getWeather(city: location!, appId: Constants.apiKey);
+    final data = await repository.getWeather(
+        city: location!, unit: tempUnit, appId: Constants.apiKey);
     switch (data) {
       case Success<Map<String, dynamic>?, Exception>():
         if (data.value != null) {
@@ -165,12 +183,21 @@ class WeatherProvider extends ChangeNotifier {
       : Utils.imageMap[
           weatherDataModel!.days![0].hours![index].conditions.toString()]!;
 
-  String getAddress() =>
-      '${weatherDataModel!.address.toString()},\n${weatherDataModel!.timezone.toString()}';
+  Future<String> getAddress() async {
+    List<String> values = weatherDataModel!.address!.split(",");
+    List<Placemark> address = await placemarkFromCoordinates(
+      double.parse(values[0]),
+      double.parse(values[1]),
+    );
+    return '${address[0].administrativeArea},${address[0].isoCountryCode},\n${weatherDataModel!.timezone.toString()}';
+  }
+
+  // String getAddress() =>
+  //     '${weatherDataModel!.address.toString()},\n${weatherDataModel!.timezone.toString()}';
 
   String getCondition() => hours!.conditions.toString();
 
-  String getCurrentTemp() => hours!.temp!.toInt().toString();
+  String getCurrentTemp() => "${hours!.temp!.toInt()}\u00B0";
 
   String getFeelLike() => hours!.feelslike!.toString();
 
@@ -263,12 +290,8 @@ class WeatherProvider extends ChangeNotifier {
       //print('Location: $status');
     });
     myLocationPosition = await Geolocator.getCurrentPosition();
-    List<Placemark> address = await placemarkFromCoordinates(
-      myLocationPosition!.latitude,
-      myLocationPosition!.longitude,
-    );
-    // print(address[0]);
-    location = "${address[0].administrativeArea},${address[0].isoCountryCode}";
+    location =
+        "${myLocationPosition!.latitude},${myLocationPosition!.longitude}";
     cacheHelper.put("location", location);
     if (kDebugMode) {
       print(location);

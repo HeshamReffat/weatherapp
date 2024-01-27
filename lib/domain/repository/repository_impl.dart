@@ -23,12 +23,12 @@ class RepoImplementation extends Repository {
 
   @override
   Future<ResponseData> getWeather(
-      {required String appId, required String city}) async {
+      {required String appId, required String unit,required String city}) async {
     Response? response;
     Map<String, dynamic>? data;
     try {
       response =
-          await dioHelper?.getData(url: "$weatherEndPoint/$city", queries: {
+          await dioHelper?.getData(url: "$weatherEndPoint/$city?unitGroup=$unit", queries: {
         "key": appId,
       });
       if (response != null) {

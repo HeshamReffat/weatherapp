@@ -20,7 +20,7 @@ class InfoCard extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             children: [
               Container(
-                height: 180,
+                height: 185,
                 margin: const EdgeInsets.only(bottom: 30),
                 width: size.width,
                 decoration: BoxDecoration(
@@ -35,7 +35,7 @@ class InfoCard extends StatelessWidget {
                         ])),
               ),
               Positioned(
-                  top: -10,
+                  top: -8,
                   left: 10,
                   child: Image.asset(
                     provider.getImage(provider.currentIndex),

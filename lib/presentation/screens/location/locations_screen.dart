@@ -99,7 +99,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
                                   return InkWell(
                                     onTap: () async {
                                       provider.location =
-                                          "${cities[index].name ?? ""},${cities[index].country ?? ''}";
+                                          "${cities[index].coord!.lat ?? ""},${cities[index].coord!.lon ?? ''}";
                                       await provider.getWeatherData(
                                           context, true);
                                       Navigator.of(ctx).pop();

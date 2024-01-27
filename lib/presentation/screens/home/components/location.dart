@@ -21,13 +21,23 @@ class Location extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    provider.getAddress(),
-                    style: const TextStyle(
-                        height: 0,
-                       // color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22),
+                  FutureBuilder(
+                    future: provider.getAddress(),
+                    builder: (context,snap){
+                      if(snap.hasData) {
+                        return Text(
+
+                          snap.requireData,
+                          style: const TextStyle(
+                              height: 0,
+                              // color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22),
+                        );
+                      }else{
+                        return Container();
+                      }
+                    },
                   ),
                   Text(
                     Utils.formateDate(DateTime.now()),

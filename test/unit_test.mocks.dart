@@ -31,6 +31,7 @@ class MockRepoImplementation extends _i1.Mock
   @override
   _i3.Future<_i4.Result<Map<String, dynamic>?, Exception>> getWeather({
     required String? appId,
+    required String? unit,
     required String? city,
   }) =>
       (super.noSuchMethod(
@@ -39,6 +40,7 @@ class MockRepoImplementation extends _i1.Mock
           [],
           {
             #appId: appId,
+            #unit: unit,
             #city: city,
           },
         ),
@@ -51,6 +53,7 @@ class MockRepoImplementation extends _i1.Mock
             [],
             {
               #appId: appId,
+              #unit: unit,
               #city: city,
             },
           ),
@@ -64,6 +67,7 @@ class MockRepoImplementation extends _i1.Mock
             [],
             {
               #appId: appId,
+              #unit: unit,
               #city: city,
             },
           ),

@@ -85,7 +85,7 @@ class Days {
   double? solarradiation;
   double? solarenergy;
   double? uvindex;
-  Conditions? conditions;
+  String? conditions;
   Icon? icon;
   List<StationElement>? stations;
   Source? source;
@@ -168,7 +168,7 @@ class Days {
     solarradiation: json["solarradiation"]?.toDouble(),
     solarenergy: json["solarenergy"]?.toDouble(),
     uvindex: json["uvindex"],
-    conditions: conditionsValues.map[json["conditions"]],
+    conditions: json["conditions"].toString(),
     icon: iconValues.map[json["icon"]]!,
     //stations: json["stations"] == null ? [] : List<StationElement>.from(json["stations"].map((x) => stationElementValues.map[x])),
     source: sourceValues.map[json["source"]]!,

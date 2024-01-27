@@ -89,7 +89,7 @@ class CenterCard extends StatelessWidget {
                           children: [
                             const Spacer(),
                             Text(
-                              provider.day!.conditions!.name,
+                              provider.day!.conditions!,
                               style: const TextStyle(
                                   height: 0,
                                   color: Colors.white,

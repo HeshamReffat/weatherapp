@@ -12,7 +12,6 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-
         Selector<WeatherProvider, ThemeData>(
           builder: (BuildContext context, value, Widget? child) {
             return GestureDetector(
@@ -22,51 +21,83 @@ class CustomAppBar extends StatelessWidget {
               },
               child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: value ==
-                      ThemeDataStyle.dark
+                  child: value == ThemeDataStyle.dark
                       ? const Row(
-                    children: [
-                      Icon(
-                        Icons.light_mode,
-                        color: Colors.amber,
-                      ),
-                      SizedBox(width: 5.0,),
-                      Text(
-                        "Light",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                      )
-                    ],
-                  )
+                          children: [
+                            Icon(
+                              Icons.light_mode,
+                              color: Colors.amber,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              "Light",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                              ),
+                            )
+                          ],
+                        )
                       : const Row(
+                          children: [
+                            Icon(
+                              Icons.dark_mode,
+                              color: Colors.amber,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              "Dark",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                              ),
+                            )
+                          ],
+                        )),
+            );
+          },
+          selector: (_, provider) => provider.themeDataStyle,
+        ),
+        const Spacer(),
+        Selector<WeatherProvider, String>(
+          builder: (BuildContext context, value, Widget? child) {
+            return GestureDetector(
+              onTap: () {
+                Provider.of<WeatherProvider>(context, listen: false)
+                    .changeUnit(context);
+              },
+              child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
                     children: [
-                      Icon(
-                        Icons.dark_mode,
-                        color: Colors.amber,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          ImageAssets.nightRain,
+                          height: 30,
+                          width: 30,
+                        ),
                       ),
-                      SizedBox(width: 5.0,),
-                      Text(
-                        "Dark",
+                      value == "us"?
+                      const Text(
+                        "\u00B0 F",
                         style: TextStyle(
-                          fontSize: 14.0,
+                          fontSize: 18.0,
+                        ),
+                      ):const Text(
+                        "\u00B0 C",
+                        style: TextStyle(
+                          fontSize: 18.0,
                         ),
                       )
                     ],
                   )),
             );
           },
-          selector: (_, provider) => provider.themeDataStyle,
+          selector: (_, provider) => provider.tempUnit,
         ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            ImageAssets.nightRain,
-            height: 30,
-            width: 30,
-          ),
-        )
       ],
     );
   }
