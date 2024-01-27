@@ -73,7 +73,7 @@ class InfoCard extends StatelessWidget {
               ),
               Positioned(
                 top: 40,
-                right: 50,
+                right: 10,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -121,7 +121,7 @@ class InfoCard extends StatelessWidget {
                   child: Image.asset(
                     ImageAssets.windWave,
                     height: 100,
-                    width: 200,
+                    //width: 200,
                   ),
                 ),
               )

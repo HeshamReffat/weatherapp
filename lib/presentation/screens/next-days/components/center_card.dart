@@ -83,18 +83,21 @@ class CenterCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 30),
+                        padding: const EdgeInsets.only(left: 30,top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Spacer(),
-                            Text(
-                              provider.day!.conditions!,
-                              style: const TextStyle(
-                                  height: 0,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                provider.day!.conditions!,
+                                style: const TextStyle(
+                                    height: 0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
@@ -125,9 +128,9 @@ class CenterCard extends StatelessWidget {
                         },
                         child: Image.asset(
                           ImageAssets.windWave,
-                          height: 130,
-                          width: 200,
-                          fit: BoxFit.fill,
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
