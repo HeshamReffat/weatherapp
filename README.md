@@ -9,15 +9,15 @@ As we have flavors we need to configure the project for running
 
 ## Example configuration android studio:
 
-search for Edit configurations add new flutter configuration\n
-name----> put the name you want (production)\n
-entryPoint-----> choose the main_production from project/lib\n
-build flavor------> production\n
-and do that for all the flavors
+-Search for Edit configurations add new flutter configuration
+-Name----> put the name you want (production)
+-EntryPoint-----> choose the main_production from project/lib
+-Build flavor------> production
+-And do that for all the flavors
 
 ## Example configuration vscode:
 
-You have to edit your launch.json file
+-You have to edit your launch.json file
 
 ```
 {
@@ -35,43 +35,43 @@ You have to edit your launch.json file
 
 ## About Project
 
-This project structure is MVVM
+-This project structure is MVVM
 
-project layers are data,domain,presentation,utils
+-Project layers are data,domain,presentation,utils
 
-data contains the data layers which is remote and local
+-Data contains the data layers which is remote and local
 
-domain contains the viewModel(Providers Classes) , data models which carry the api response
+-Domain contains the viewModel(Providers Classes) , data models which carry the api response
 di, and repository where it switch the data layers and get the data
 
-presentation contains the ui components and screens
+-Presentation contains the ui components and screens
 
-utils contains constants and helper methods
+-Utils contains constants and helper methods
 
-Theme contains the dark and light themes
+-Theme contains the dark and light themes
 
 ## AppFeatures
 
-Flavors: [dev,staging,production]
+-Flavors: [dev,staging,production]
 
-AppIcon changes depend on flavor
+-AppIcon changes depend on flavor
 
-Theme switch between dark and light
+-Theme switch between dark and light
 
-Cashing the data for offline access
+-Cashing the data for offline access
 
-request the data from network using Dio
+-Request the data from network using Dio
 
-error Handling for network layer and local layer
+-Error Handling for network layer and local layer
 
-Di for injection and singleton
+-Di for injection and singleton
 
-unit test for api call
+-Unit test for api call
 
-state management using provider
+-State management using provider
 
-GeoLocating for getting the user location and get weather for his city
+-GeoLocating for getting the user location and get weather for his city
 
-all cities are stored in local json file change location by pressing on location icon in home
+-All cities are stored in local json file change location by pressing on location icon in home
 
-multithreading for heavy tasks
+-Multithreading for heavy tasks
