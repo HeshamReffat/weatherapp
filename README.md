@@ -10,9 +10,13 @@ As we have flavors we need to configure the project for running
 ## Example configuration android studio:
 
 -Search for Edit configurations add new flutter configuration
+
 -Name----> put the name you want (production)
+
 -EntryPoint-----> choose the main_production from project/lib
+
 -Build flavor------> production
+
 -And do that for all the flavors
 
 ## Example configuration vscode:
