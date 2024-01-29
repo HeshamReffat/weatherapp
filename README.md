@@ -1,6 +1,36 @@
 # weatherapp
 
-Flutter app that show the weather condition for your location or you can select another location to get it's weather condition
+Flutter app that show the weather condition for your location or you can select another location to
+get it's weather condition
+
+## ConfigureProject
+
+As we have flavors we need to configure the project for running
+
+## Example configuration android studio:
+
+search for Edit configurations add new flutter configuration
+name----> put the name you want (production)
+entryPoint-----> choose the main_production from project/lib
+build flavor------> production
+and do that for all the flavors
+
+## Example configuration vscode:
+
+You have to edit your launch.json file
+
+```{
+            "name": "production", // you can add nickname for it
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--production", //flavor name
+                "prod",
+                "-t", // if your have different main file
+                "lib/main_production.dart" 
+            ]
+},
+```
 
 ## About Project
 
@@ -20,6 +50,7 @@ utils contains constants and helper methods
 Theme contains the dark and light themes
 
 ## AppFeatures
+
 Flavors: [dev,staging,production]
 
 AppIcon changes depend on flavor
