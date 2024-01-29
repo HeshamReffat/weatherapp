@@ -19,7 +19,8 @@ and do that for all the flavors
 
 You have to edit your launch.json file
 
-```{
+```
+{
             "name": "production", // you can add nickname for it
             "request": "launch",
             "type": "dart",
