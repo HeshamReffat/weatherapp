@@ -8,7 +8,8 @@ import 'dart:async' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i5;
 import 'package:weatherapp/data/data_source/remote/errors.dart' as _i4;
-import 'package:weatherapp/domain/repository/repository_impl.dart' as _i2;
+
+import 'unit_test.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,11 +24,10 @@ import 'package:weatherapp/domain/repository/repository_impl.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [RepoImplementation].
+/// A class which mocks [RepositoryTest].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRepoImplementation extends _i1.Mock
-    implements _i2.RepoImplementation {
+class MockRepositoryTest extends _i1.Mock implements _i2.RepositoryTest {
   @override
   _i3.Future<_i4.Result<Map<String, dynamic>?, Exception>> getWeather({
     required String? appId,

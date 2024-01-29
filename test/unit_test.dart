@@ -2,18 +2,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:weatherapp/data/data_source/remote/errors.dart';
-import 'package:weatherapp/domain/repository/repository_impl.dart';
+import 'package:weatherapp/domain/repository/repository.dart';
 import 'package:weatherapp/utils/constants.dart';
 
 import 'unit_test.mocks.dart';
-
+class RepositoryTest extends Mock implements Repository{}
 @GenerateNiceMocks(
-  [MockSpec<RepoImplementation>()],
+  [MockSpec<RepositoryTest>()],
 )
 void main() {
-  late MockRepoImplementation repoImplementation;
+  late MockRepositoryTest repoImplementation;
   setUpAll(() {
-    repoImplementation = MockRepoImplementation();
+    repoImplementation = MockRepositoryTest();
     provideDummy<Result<Map<String, dynamic>?, Exception>>(const Success({}));
     provideDummy<Result<Map<String, dynamic>?, Exception>>(
         Failure({}, Exception("error")));
